@@ -13,6 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
 from django.utils.text import slugify
 from datetime import datetime
+from decouple import config
 
 orderId='0'
 custId='0'
@@ -62,13 +63,19 @@ class FindFarm(ListView):
         farm=self.request.GET.get('farm')
         date=(self.request.GET.get('date'))
         city=self.request.GET.get('city')
+        print(farm)
+        print(city)
+        print(date)
         if city:
+            print("city filter")
             queryset= queryset.filter(city=city)
         if date:
+            print("date filter")
             farmavailable=FarmAvailble.objects.filter(available=date).filter(is_booked=False)
             for farm_dates in farmavailable:
                 queryset=queryset.filter(id=farm_dates.farm.id)
         if farm:
+            print("farm filter")
             farmslug=slugify(str(farm))
             if queryset.filter(slug=farmslug).count() > 0:
                 queryset=queryset.filter(slug=farmslug)
@@ -124,7 +131,7 @@ class PaymentCheckout(LoginRequiredMixin,CreateView):
         self.object.save()
         param_dict = {
 
-                'MID': settings.MID_HERE,
+                'MID': config('MID_HERE'),
                 'ORDER_ID': str(orderId),
                 'TXN_AMOUNT': price,
                 'CUST_ID': custId,
@@ -134,7 +141,7 @@ class PaymentCheckout(LoginRequiredMixin,CreateView):
                 'CALLBACK_URL':'http://127.0.0.1:8000/paymentstatus/',
 
         }
-        param_dict['CHECKSUMHASH'] = checksum.generateSignature(param_dict, settings.M_KEY)
+        param_dict['CHECKSUMHASH'] = checksum.generateSignature(param_dict, config('M_KEY'))
         return render(self.request,'paytm.html',{'param_dict':param_dict})
 
     def get_context_data(self,*args,**kwargs):
@@ -157,7 +164,7 @@ def paymentstatus(request):
         if i=='ORDERID':
             orderId=form[i]
 
-    verify=checksum.verifySignature(response_dict,settings.M_KEY,paytmchecksum)
+    verify=checksum.verifySignature(response_dict,config('M_KEY'),paytmchecksum)
     farm=FarmAvailble.objects.get(booking_order_id=orderId)
     if verify:
         if response_dict['RESPCODE']=='01':
