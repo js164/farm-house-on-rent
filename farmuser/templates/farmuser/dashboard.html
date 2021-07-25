@@ -1,0 +1,7 @@
+{% extends 'farmuser/base.html' %}
+
+{% block contant %}
+    <h1>Welcome {{request.user}}</h1><hr><br><br>
+    <h4>Total Farms: {{totalfarms}}</h4><br>
+    <h4>Upcoming Bookings: {{upcomingbookings}}</h4><br>
+{% endblock %}

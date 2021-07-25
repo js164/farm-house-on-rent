@@ -1,0 +1,24 @@
+{% extends 'farmuser/base.html' %}
+
+{% block contant %} <br>
+<h1>{{request.user}}</h1>
+{% for farm in object_list %}
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col">
+                <strong>Farm Name:</strong> <a href="{% url 'farmuser:farmdetail' pk=farm.pk %}"> {{farm.farmname}}</a><br>
+                <strong>Size of Farm: </strong>{{farm.SizeOfFarm}} sq. feet<hr><br>
+                <strong>Address: </strong><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{{farm.address}}<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{{farm.area}}<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{{farm.city}}<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{{farm.pincode}}<br>
+            </div>
+            <div class="col">
+                <img class="rounded float-right" style="max-width: 400px;max-height:300px;" src="http://127.0.0.1:8000/media/{{farm.image}}" alt="Not Found">
+            </div>
+        </div>
+    </div>
+{% endfor %}
+<br><br>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'farmuser/base.html' %}
+
+{% block contant %}
+    {% for Booking in object_list %}
+        <div class="jumbotron">
+            <strong> Name: </strong>{{Booking.user.username}}<br>
+            <strong> Farm: </strong>{{Booking.farm.farmname}}<br>
+            <strong> Date: </strong>{{Booking.farm_booking_date}}<br>
+            <strong> No of People: </strong>{{Booking.No_of_People}} <br>     
+        </div>
+    {% endfor %}
+{% endblock %}
