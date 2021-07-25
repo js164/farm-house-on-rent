@@ -1,17 +1,14 @@
-from betterforms.multiform import MultiModelForm,MultiForm
 from farmuser.models import Farm,FarmImage,FarmAvailble,FarmBooking
 # from extra_views import CreateWithInlinesView,InlineFormSet
 from django import forms
 
 
-class FarmForm(MultiModelForm):
-    form_classes = {
-        'farm': Farm,
-        'images': FarmImage,
-    }
-
-
 class OnlyFarmForm(forms.ModelForm):
+    # form_classes = {
+    #     'farm': Farm,
+    #     'images': FarmImage,
+    # }
+    # images=forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
     class Meta():
         model = Farm
         fields=('farmname','SizeOfFarm','address','area','city','pincode')
