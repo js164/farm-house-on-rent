@@ -2,7 +2,7 @@
 
 {% block contant %}
 </div>
-<div style="width: 99vw;height:700px;background-image:linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.7) 100%), url(http://127.0.0.1:8000/media/home_search_bg_image1.jpg);background-size:cover;">
+<div style="width: 99vw;height:700px;background-image:linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.7) 100%), url(https://farm-house.herokuapp.com/media/home_search_bg_image1.jpg);background-size:cover;">
   <div class="container"  style="padding-top:300px;">
   <form action="{% url 'findfarm' %}" style="padding: 20px;border:solid black; border-radius: 25px;background-color:rgba(169, 169, 169, 0.562);">
     <div class="row align-self-center">{% csrf_token %}
@@ -36,7 +36,7 @@
       {% for farm in farms %}
         <div class="col">
           <div class="card" style="width: 18rem;">
-            <img class="card-img-top" style="height: 200px;object-fit: cover;" src="media/{{farm.image}}" alt="Card image cap">
+            <img class="card-img-top" style="height: 200px;object-fit: cover;" src="https://farm-house.herokuapp.com/media/{{farm.image}}" alt="Card image cap">
             <div class="card-body">
               <h5 class="card-title"><a href="{% url 'farmdetail' pk=farm.pk %}">{{farm.farmname}}</a></h5>
             </div>
