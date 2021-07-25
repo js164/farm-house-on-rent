@@ -27,33 +27,13 @@ class Dashboard(TemplateView):
 
 class AddFarm(CreateView):
     form_class=FarmCreatForm
-    # ImageFormSet = modelformset_factory(FarmImage,form=FarmImageCreat, extra=3)
-    # second_form_class=FarmImageCreat
-    # model=FarmImage
-    # model=Farm
-    # fields=('user','farmname','SizeOfFarm','address','area','city','pincode')
     template_name='farmuser/addfarm_form.html'
     success_url=reverse_lazy('dashboard')
-
-    # def get_context_data(self, **kwargs):
-    #     context = super(AddFarm, self).get_context_data(**kwargs)
-    #     if 'farm' not in context:
-    #         context['farm'] = self.form_class(self.request.GET)
-    #     if 'images' not in context:
-    #         context['images'] = self.second_form_class(self.request.GET)
-    #     return context
 
     def form_valid(self, form):
         farm = super(AddFarm,self).form_valid(form)
         farm.save()
-        # images = form['images'].save(commit=False)
-        # images.farm = farm
-        # images.save()
         return reverse('dashboard')
-
-    # def psot(self,request,)
-    # def get_success_url(self, **kwargs):
-    #     return reverse('dashboard')
 
 class NewFarm(CreateView):
     form_class=FarmCreatForm

@@ -10,26 +10,8 @@ class FarmForm(MultiModelForm):
         'images': FarmImage,
     }
 
-    # def __init__(self,*args,**kwargs):
-    #     super(FarmForm,self).__init__(*args,**kwargs)
-    #     self.fields['SizeOfFarm'].label='Farm Size(in seq feet)'
-
-# class FarmForm(CreateWithInlinesView):
-#     model = Farm
-#     inlines = [FarmImage,]
-
-# class FarmImageForm(InlineFormSet):
-#     model=FarmImage
-
-
-
 
 class OnlyFarmForm(forms.ModelForm):
-    # form_classes = {
-    #     'farm': Farm,
-    #     'images': FarmImage,
-    # }
-    # images=forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
     class Meta():
         model = Farm
         fields=('farmname','SizeOfFarm','address','area','city','pincode')
