@@ -3,22 +3,7 @@ from farmuser.models import Farm,FarmImage,FarmAvailble,FarmBooking
 from django import forms
 
 
-class OnlyFarmForm(forms.ModelForm):
-    # form_classes = {
-    #     'farm': Farm,
-    #     'images': FarmImage,
-    # }
-    # images=forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
-    class Meta():
-        model = Farm
-        fields=('farmname','SizeOfFarm','address','area','city','pincode')
-        widgets = {
-            "image": forms.ClearableFileInput(attrs={
-                "class": "form-control"
-            }),
-        }
-
-class FarmCreatForm(OnlyFarmForm):
+class FarmCreatForm(forms.ModelForm):
 
     more_image= forms.FileField(required=False, widget=forms.FileInput(attrs={
         "class": "form-control",
@@ -26,7 +11,7 @@ class FarmCreatForm(OnlyFarmForm):
     }))
 
 
-    class Meta(OnlyFarmForm.Meta):
+    class Meta():
         model = Farm
         fields=('farmname','SizeOfFarm','address','area','city','pincode','image')
 
@@ -36,11 +21,6 @@ class FarmCreatForm(OnlyFarmForm):
         self.fields['SizeOfFarm'].label='Size Of Farm'
         self.fields['image'].label='Display Image'
 
-class FarmImageCreat(forms.ModelForm):
-    images=forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
-    class Meta():
-        model=FarmImage
-        fields=('images',)
 
 class DateInput(forms.DateInput):
     input_type = 'date'
