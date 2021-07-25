@@ -10,6 +10,7 @@ from django.contrib.auth import get_user_model
 from django.utils.text import slugify
 import random
 from django.contrib.auth.models import Group
+from decouple import config
 
 # Create your views here.
 User=get_user_model()
@@ -44,14 +45,22 @@ class FarmSignup(CreateView):
         mobile=form.cleaned_data.get('mobile')
         self.request.session['mobile']=mobile
         otp = str(random.randint(1000 , 9999))
-        # SendOTP(mobile,otp)
+        print(config('SENDOTP'))
+        if config('SENDOTP', cast=bool):
+            SendOTP(mobile,otp)
+        else:
+            send_email(user)
         self.object=form.save(commit=False)
         self.object.otp=otp
         self.object.save()
         returnVal = super(FarmSignup, self).form_valid(form)
         return returnVal   
+
     def get_success_url(self, **kwargs):
-        return reverse('accounts:otp')
+        if config('SENDOTP', cast=bool):
+            return reverse('accounts:otp')
+        else:
+            return reverse_lazy('login')
 
 class CustSignup(CreateView):
     form_class=CustUserCreateForm
@@ -66,12 +75,12 @@ class CustSignup(CreateView):
 
 
 def SendOTP(mobile,otp):
-    account_sid = 'AC36e3c3e3db5f87ccf93d2ceafe442d29'
-    auth_token = 'f11507b6b2befca99240dc2f97d0877f'
+    account_sid = config('account_sid')
+    auth_token = config('auth_token')
     client = Client(account_sid, auth_token)
     message = client.messages.create(
                                 body='Please Verify your mobile number! Your OTP is {}'.formate(otp),
-                                from_='+12407022219',
+                                from_=config('from_mobile'),
                                 to='+91{}'.formate(mobile)
                             )
     print("SendOtp called")
