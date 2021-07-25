@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block contant %}
+    {% for Booking in object_list %}
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col">
+                    <strong> Name: </strong>{{Booking.user.username}}<br>
+                    <strong> Farm: </strong>{{Booking.farm.farmname}}<br>
+                    <strong> Date: </strong>{{Booking.farm_booking_date}}<br>
+                    <strong> No of People: </strong>{{Booking.No_of_People}} <br>
+                    <strong>Address: </strong><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{Booking.farm.address}}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{Booking.farm.area}}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{Booking.farm.city}}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{Booking.farm.pincode}}<br>
+                </div>
+                <div class="col">
+                    <img class="rounded float-right" style="max-width: 400px;max-height:300px;" src="http://127.0.0.1:8000/media/{{Booking.farm.image}}" alt="Not Found">
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

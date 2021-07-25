@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block contant %}
+        <h1>Book Farm</h1><hr><hr>
+        <h4>
+            <strong>Farm Name: </strong>{{farmbooking.farm.farmname}}<br><br>
+            <strong>Group: </strong>{{farmbooking.farm.user.username}}<br><br>
+            <strong>Date For Rent: </strong>{{farmbooking.available}}<br><br>
+            <strong>Price: </strong>{{farmbooking.farmprice}}<br><br>
+            
+        </h4>
+        <form method="POST">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            
+            <button type="submit" class='btn btn-primary'>Pay</button>
+        </form>
+{% endblock %}
