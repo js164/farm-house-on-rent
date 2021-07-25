@@ -63,19 +63,13 @@ class FindFarm(ListView):
         farm=self.request.GET.get('farm')
         date=(self.request.GET.get('date'))
         city=self.request.GET.get('city')
-        print(farm)
-        print(city)
-        print(date)
         if city:
-            print("city filter")
             queryset= queryset.filter(city=city)
         if date:
-            print("date filter")
             farmavailable=FarmAvailble.objects.filter(available=date).filter(is_booked=False)
             for farm_dates in farmavailable:
                 queryset=queryset.filter(id=farm_dates.farm.id)
         if farm:
-            print("farm filter")
             farmslug=slugify(str(farm))
             if queryset.filter(slug=farmslug).count() > 0:
                 queryset=queryset.filter(slug=farmslug)
@@ -138,7 +132,7 @@ class PaymentCheckout(LoginRequiredMixin,CreateView):
                 'INDUSTRY_TYPE_ID': 'Retail',
                 'WEBSITE': 'WEBSTAGING',
                 'CHANNEL_ID': 'WEB',
-                'CALLBACK_URL':'http://127.0.0.1:8000/paymentstatus/',
+                'CALLBACK_URL':'https://farm-house.herokuapp.com/paymentstatus/',
 
         }
         param_dict['CHECKSUMHASH'] = checksum.generateSignature(param_dict, config('M_KEY'))
