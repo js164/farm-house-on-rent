@@ -9,9 +9,8 @@ from django.utils.text import slugify
 User=get_user_model()
 
 class FarmUser(auth.models.User,auth.models.PermissionsMixin):
-    # user=models.OneToOneField(User,related_name="farm_user",on_delete=models.CASCADE,null=True)
     slug=models.SlugField(allow_unicode=True,unique=True,null=True)
-    mobile=models.IntegerField(unique=True,null=True)
+    mobile=models.BigIntegerField(unique=True,null=True)
     otp=models.IntegerField(default=0)
 
     def __str__(self):
@@ -24,9 +23,8 @@ class FarmUser(auth.models.User,auth.models.PermissionsMixin):
 
 
 class CustUser(auth.models.User,auth.models.PermissionsMixin):
-    # user=models.OneToOneField(User,related_name="cust_user",on_delete=models.CASCADE)
     slug=models.SlugField(allow_unicode=True,unique=True,null=True)
-    mobile=models.IntegerField(unique=True,null=True)
+    mobile=models.BigIntegerField(unique=True,null=True)
 
     def __str__(self):
         return "@{}".format(self.username)
