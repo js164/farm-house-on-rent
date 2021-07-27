@@ -62,10 +62,6 @@ class FarmBooking(models.Model):
     farm_booking_date=models.DateField(validators=[validate_date])
     price=models.IntegerField()
     booking_order_id=models.CharField(max_length=100,default='',null=True)
-    No_of_People=models.IntegerField( default=1,
-        validators=[
-            MaxValueValidator(20),
-            MinValueValidator(1)
-        ])
+    No_of_People=models.IntegerField( default=1)
 
 
