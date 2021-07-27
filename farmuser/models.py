@@ -23,15 +23,20 @@ class Farm(models.Model):
 
     def __str__(self):
         return self.farmname
-    
+
     def save(self,*args,**kwargs):
         self.slug = slugify(self.farmname)
         super().save(*args,**kwargs)
+    
+    class Meta:
+        ordering = ('-id',)
 
  
 class FarmImage(models.Model):
     farm = models.ForeignKey(Farm, related_name="farm_image", on_delete=models.CASCADE)
     image = models.FileField(upload_to='farms/',blank=True, null=True, default='‪seee.jpg')
+
+
  
 
 def validate_date(date):

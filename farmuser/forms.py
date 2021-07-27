@@ -22,6 +22,7 @@ class FarmCreatForm(forms.ModelForm):
         self.fields['image'].label='Display Image'
 
 
+
 class DateInput(forms.DateInput):
     input_type = 'date'
 

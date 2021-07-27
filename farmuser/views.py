@@ -24,21 +24,10 @@ class Dashboard(TemplateView):
         context={'totalfarms':totalfarms,'upcomingbookings':upcomingfarmbookings}
         return context
 
-
-class AddFarm(CreateView):
-    form_class=FarmCreatForm
-    template_name='farmuser/addfarm_form.html'
-    success_url=reverse_lazy('dashboard')
-
-    def form_valid(self, form):
-        farm = super(AddFarm,self).form_valid(form)
-        farm.save()
-        return reverse('dashboard')
-
 class NewFarm(CreateView):
     form_class=FarmCreatForm
     template_name='farmuser/addfarm_form.html'
-    success_url=reverse_lazy('dashboard')
+    # success_url=reverse_lazy('dashboard')
 
     def form_valid(self,form):
         self.object=form.save(commit=False)
@@ -49,6 +38,8 @@ class NewFarm(CreateView):
             FarmImage.objects.create(farm=self.object, image=i)
         return super().form_valid(form)
     
+    def get_success_url(self):
+        return reverse('farmuser:farmdetail',kwargs={'pk':self.object.id})
 
 class FarmList(ListView):
     model=Farm
