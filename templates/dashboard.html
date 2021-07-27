@@ -36,7 +36,7 @@
       {% for farm in farms %}
         <div class="col">
           <div class="card" style="width: 18rem;">
-            <img class="card-img-top" style="height: 200px;object-fit: cover;" src="https://farm-house.herokuapp.com/media/{{farm.image}}" alt="Card image cap">
+            <img class="card-img-top" style="height: 200px;object-fit: cover;" src="{{farm.image.url}}" alt="Card image cap">
             <div class="card-body">
               <h5 class="card-title"><a href="{% url 'farmdetail' pk=farm.pk %}">{{farm.farmname}}</a></h5>
             </div>
