@@ -1,10 +1,20 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block contant %}
-        <h1>Login</h1>
-        <form method="POST">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            <button type="submit" class='btn btn-primary'>Login</button>
-        </form>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <h1>Login</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" class='btn btn-primary'>Login</button>
+    </form>
 {% endblock %}
