@@ -11,6 +11,8 @@ from django.utils.text import slugify
 import random
 from django.contrib.auth.models import Group
 from decouple import config
+from django.contrib import messages
+from twilio.rest import Client
 
 # Create your views here.
 User=get_user_model()
@@ -24,6 +26,7 @@ def OTPVerify(request):
         if otp == str(user.otp):
             print("Sucess")
             send_email(user)
+            messages.add_message(request, messages.INFO, 'Verification Link Successfully send to your email! Please verify to Log In...')
             return redirect('login')
         else:
             print('Wrong')
@@ -46,13 +49,11 @@ class FarmSignup(CreateView):
         self.request.session['mobile']=mobile
         otp = str(random.randint(1000 , 9999))
         print(config('SENDOTP'))
-        if config('SENDOTP', cast=bool):
-            SendOTP(mobile,otp)
-        else:
-            send_email(user)
         self.object=form.save(commit=False)
         self.object.otp=otp
         self.object.save()
+        if config('SENDOTP', cast=bool):
+            SendOTP(mobile,otp)
         returnVal = super(FarmSignup, self).form_valid(form)
         return returnVal   
 
@@ -60,6 +61,9 @@ class FarmSignup(CreateView):
         if config('SENDOTP', cast=bool):
             return reverse('accounts:otp')
         else:
+            user=FarmUser.objects.get(mobile=self.object.mobile)
+            send_email(user)
+            messages.add_message(self.request, messages.INFO, 'Verification Link Successfully send to your email! Please verify to Log In...')
             return reverse_lazy('login')
 
 class CustSignup(CreateView):
@@ -79,8 +83,8 @@ def SendOTP(mobile,otp):
     auth_token = config('auth_token')
     client = Client(account_sid, auth_token)
     message = client.messages.create(
-                                body='Please Verify your mobile number! Your OTP is {}'.formate(otp),
+                                body='Please Verify your mobile number! Your OTP is '+otp,
                                 from_=config('from_mobile'),
-                                to='+91{}'.formate(mobile)
+                                to='+91'+str(mobile)
                             )
     print("SendOtp called")
