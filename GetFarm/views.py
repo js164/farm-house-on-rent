@@ -29,8 +29,11 @@ class Dashboard(TemplateView):
                 context = {'farms': Farm.objects.all()[:3:1]}
                 return render(request, "dashboard.html", context=context)
         except:
-            context = {'farms': Farm.objects.all()[:3:1]}
-            return render(request, "dashboard.html", context=context)
+            try:
+                context = {'farms': Farm.objects.all()[:3:1]}
+                return render(request, "dashboard.html", context=context)
+            except:
+                return render(request, "dashboard.html")
 
 class FarmList(ListView):
     model=Farm
