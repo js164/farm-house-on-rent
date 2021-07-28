@@ -77,6 +77,7 @@ TEMPLATES = [
     },
 ]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 WSGI_APPLICATION = 'GetFarm.wsgi.application'
 
 
