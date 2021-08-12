@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
 
 {% block contant %}
-<br><br>
+<br>
+{% if messages %}
+    {% for message in messages %}
+        <h2>{{message}}</h2>
+    {% endfor %}
+{% endif %}
+<br>
 {% for farm in object_list %}
 <div class="jumbotron">
     <div class="row">
