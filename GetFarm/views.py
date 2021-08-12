@@ -75,6 +75,10 @@ class FindFarm(ListView):
             farmslug=slugify(str(farm))
             if queryset.filter(slug=farmslug).count() > 0:
                 queryset=queryset.filter(slug=farmslug)
+        if queryset.count()==0:
+            messages.add_message(self.request, messages.INFO, 'No Farm is Available According to your Search...')
+            messages.add_message(self.request, messages.INFO, 'Here are All Farms')
+            return super().get_queryset()
         return queryset
 
 
