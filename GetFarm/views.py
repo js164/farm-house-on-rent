@@ -70,8 +70,7 @@ class FindFarm(ListView):
             queryset= queryset.filter(city=city)
         if date:
             farmavailable=FarmAvailble.objects.filter(available=date).filter(is_booked=False)
-            for farm_dates in farmavailable:
-                queryset=queryset.filter(id=farm_dates.farm.id)
+            queryset=queryset.filter(id__in=[farm_dates.farm.id for farm_dates in farmavailable])
         if farm:
             farmslug=slugify(str(farm))
             if queryset.filter(slug=farmslug).count() > 0:
